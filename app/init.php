@@ -1,12 +1,5 @@
 <?php
 
-/*
- * Initialization file:
- * - Your app does all the smart stuffs here!
- * - You can also switch the development mode ON or OFF here by changing the DEV_MODE global.
- */
-
-// Start session for the current user
 session_start();
 
 // Add the configuration file
@@ -16,7 +9,6 @@ if (file_exists($config_location))
 	require $config_location;
 }
 
-// Development Mode: Enable (1) or Disable (0) - Comes from config file
 if (DEV_MODE)
 {
 	ini_set('display_errors', DEV_MODE);
