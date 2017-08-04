@@ -1,12 +1,10 @@
 <?php
 
-/*
- * This is your application's config file.
- * You can use this file to store any sensible information such as API keys, Database credentials etc.
- *
- * You are advised to move this file to your .gitignore if you are to publish your application to a public repository.
- * You may also git rm the file prior to doing so.
- */
-
-define('BISCUIT_LINK_VERSION', '0.0.1-alpha');
+// Enable dev mode (1) or disable (0)
 define('DEV_MODE', 1);
+
+// Global definitions - Change these to match your own Bitcoin Core information
+define('RPC_USER', 'carlos');
+define('RPC_PASSWORD', 'carlosFYIBitcoin201715thJuly');
+define('RPC_HOST', '127.0.0.1');
+define('RPC_PORT', '8332');
