@@ -16,7 +16,10 @@ class APIController extends Controller
 
 		switch ($api_method)
 		{
-			case 'getInfo':
+			case 'getinfo':
+			case 'getblockchaininfo':
+				$data = BitcoinCore::getBlockChainInfo();
+				var_dump($data);
 				break;
 			default:
 				break;
@@ -25,6 +28,9 @@ class APIController extends Controller
 
 	private static function cleanup_method($method)
 	{
-
+		$method = trim($method);
+		$method = strip_tags($method);
+		$method = strtolower($method);
+		return $method;
 	}
 }
