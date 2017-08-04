@@ -12,7 +12,19 @@ class APIController extends Controller
 
 	public static function handleMethod($api_method)
 	{
-		echo $api_method;
-		exit;
+		$api_method = self::cleanup_method($api_method);
+
+		switch ($api_method)
+		{
+			case 'getInfo':
+				break;
+			default:
+				break;
+		}
+	}
+
+	private static function cleanup_method($method)
+	{
+
 	}
 }
