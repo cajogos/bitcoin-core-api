@@ -6,8 +6,17 @@ class APIController extends Controller
 {
 	public static function handleIndex()
 	{
-		echo 'no method';
-		exit;
+		$methods = array(
+			'getinfo',
+			'getblockchaininfo',
+			'getbalance'
+			);
+
+		print '<h1>Available Methods:</h1>';
+		foreach ($methods as $method)
+		{
+			print '<a href="/' . $method . '" target="blank">' . $method . '</a><hr />';
+		}
 	}
 
 	public static function handleMethod($api_method)
