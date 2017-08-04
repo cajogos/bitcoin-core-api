@@ -57,16 +57,7 @@ spl_autoload_register(function ($class_name)
 		}
 		else
 		{
-			// Check if Element
-			$location = $_SERVER['DOCUMENT_ROOT'] . '/../elements/' . $class_name . '.php';
-			if (file_exists($location))
-			{
-				require_once $location;
-			}
-			else
-			{
-				throw new Exception('Could not find class: ' . $class_name);
-			}
+			throw new Exception('Could not find class: ' . $class_name);
 		}
 	}
 });
