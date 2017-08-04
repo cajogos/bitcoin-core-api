@@ -18,8 +18,10 @@ class APIController extends Controller
 		{
 			case 'getinfo':
 			case 'getblockchaininfo':
-				$data = BitcoinCore::getBlockChainInfo();
-				var_dump($data);
+				BitcoinCore::getBlockChainInfo();
+				break;
+			case 'getbalance';
+				BitcoinCore::getBalance();
 				break;
 			default:
 				break;
