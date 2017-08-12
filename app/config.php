@@ -4,7 +4,7 @@
 define('DEV_MODE', 1);
 
 // Global definitions - Change these to match your own Bitcoin Core information
-$bitcoin_config = file_get_contents('/home/carlos/.bitcoin/bitcoin.conf');
+$bitcoin_config = file_get_contents('/home/bitcoiner/.bitcoin/bitcoin.conf');
 $bitcoin_config = explode("\n", $bitcoin_config);
 
 $temp_array = array();
