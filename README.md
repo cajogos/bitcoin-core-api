@@ -20,8 +20,8 @@ The calls here are pretty much the same as [Bitcoin Developer Reference](https:/
 These are the calls you can already use, make sure to do the proper type of request and send the correct params for them.
 
 
-## Contributors
+## About The Project
 
-This project was built on top of my other Open Source PHP framework [Biscuit Link](https://biscuit.link).
+This project was built on top of my other Open Source, PHP framework, project [Biscuit Link](https://biscuit.link).
 
-Find out more about the author here [carlos.fyi](https://carlos.fyi).
+Find out more about the author by going to [https://carlos.fyi](https://carlos.fyi).
