@@ -13,37 +13,9 @@ Keeping these systems separate is a good idea to stop them nasty :smiling_imp: w
 
 ## API Calls
 
-The calls here are pretty much the same as [Bitcoin Developer Reference](https://bitcoin.org/en/developer-reference#remote-procedure-calls-rpcs), and they are built using its values.
+The calls here are pretty much the same as [Bitcoin Developer Reference](https://bitcoin.org/en/developer-reference#remote-procedure-calls-rpcs), and they are built using similar concepts.
 
-### GET Methods
-
-#### :ok_hand: getinfo
-
-- **URI:** `/getinfo`
-- **Example:** `http://localhost/getinfo`
-
-##### Params
-
-None.
-
-#### :ok_hand: getbalance
-
-- **URI:** `/getbalance`
-- **Example:** `http://localhost/getbalance?account=carlos&confirmations=5&watchOnly=false`
-
-##### Params
-
-Name | Type | Presence | Description
---- | --- | --- | ---
-`account` | string | optional | An account name, use * to display ALL (default), use empty string to display default account.
-`confirmations` | int | optional | The minimum number of confirmations.
-`watchOnly` | bool | optional | Whether to include watch-only addresses.
-
-More coming soon...
-
-### POST Methods
-
-More coming soon...
+To keep this introduction short, we placed the [API Calls here](API_CALLS.md).
 
 
 ## About The Project
