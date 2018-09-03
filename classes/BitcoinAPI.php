@@ -37,7 +37,7 @@ class BitcoinAPI extends APIResponse
 		// Boolean params
 		if ($param === 'false' || $param === 'true')
 		{
-			$param = (bool) $param;
+			$param = (bool)$param;
 		}
 		$this->params[] = $param;
 	}
@@ -54,7 +54,6 @@ class BitcoinAPI extends APIResponse
 
 	private function curl()
 	{
-
 		$ch = curl_init();
 
 		$http_header = array('Content-Type: text/plain');
@@ -75,8 +74,22 @@ class BitcoinAPI extends APIResponse
 
 		$result = curl_exec($ch);
 
-		$result_object = json_decode($result);
+		if ($result === false)
+		{
+			$curl_error = curl_error($ch);
+			$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-		return (array) $result_object;
+			if ($http_code !== 200)
+			{
+				$result = array(
+					'message' => 'Curl error',
+					'details' => $curl_error
+				);
+				return $result;
+			}
+		}
+
+		$result_object = json_decode($result);
+		return (array)$result_object;
 	}
 }
