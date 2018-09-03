@@ -7,6 +7,7 @@ class APIResponse
 {
 	const STATUS_SUCCESS = 'success';
 	const STATUS_FAIL = 'fail';
+
 	/**
 	 * @var string
 	 */
