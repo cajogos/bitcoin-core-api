@@ -4,47 +4,68 @@ use Cajogos\Biscuit\Controller as Controller;
 
 class APIController extends Controller
 {
-	public static function handleIndex()
+	/**
+	 * @var APIResponse|null
+	 */
+	private static $api_response = null;
+
+	public static function handleRequest($method)
 	{
-		$methods = array(
-			'getinfo',
-			'getblockchaininfo',
-			'getbalance'
-		);
+		$method = self::cleanup_method($method);
 
-		print '<h1>Available Methods:</h1>';
-		foreach ($methods as $method)
+		self::$api_response = new APIResponse();
+		switch (Request::getMethod())
 		{
-			print '<a href="/' . $method . '" target="blank">' . $method . '</a><hr />';
-		}
-	}
-
-	public static function handleMethod($api_method)
-	{
-		$api_method = self::cleanup_method($api_method);
-
-		switch ($api_method)
-		{
-			case 'getinfo':
-			case 'getblockchaininfo':
-				$api = BitcoinAPI::get();
-				$api->setMethod('getblockchaininfo');
-				return $api->getResult();
-			case 'getbalance';
-				$api = BitcoinAPI::get();
-				$api->setMethod('getbalance');
-//				$api->addParam($account);
-				return $api->getResult();
-			default:
+			case Request::METHOD_GET:
+				self::handle_get($method);
+				break;
+			case Request::METHOD_POST:
+				self::handle_post($method);
 				break;
 		}
+		self::$api_response->displayFailure(APIResponse::ERROR_INVALID_REQUEST_METHOD);
 	}
 
 	private static function cleanup_method($method)
 	{
 		$method = trim($method);
 		$method = strip_tags($method);
-		$method = strtolower($method);
 		return $method;
+	}
+
+	private static function handle_get($method)
+	{
+		$params = $_GET;
+
+		$core_api = new CoreAPIRequest(self::$api_response);
+		$core_api->addParams($params);
+		switch ($method)
+		{
+			case CoreAPIRequest::METHOD_GET_GETINFO:
+				$core_api->getInfo();
+				break;
+			case CoreAPIRequest::METHOD_GET_GETBALANCE:
+				$core_api->getBalance();
+				break;
+			default:
+				self::$api_response->displayFailure(CoreAPIRequest::ERROR_INVALID_METHOD, "Invalid method GET $method provided, please check documentation.");
+				break;
+		}
+		$core_api->displayResponse();
+	}
+
+	private static function handle_post($method)
+	{
+		$params = $_POST;
+
+		$core_api = new CoreAPIRequest(self::$api_response);
+		$core_api->addParams($params);
+		switch ($method)
+		{
+			default:
+				self::$api_response->displayFailure(CoreAPIRequest::ERROR_INVALID_METHOD, "Invalid method POST $method provided, please check documentation.");
+				break;
+		}
+		$core_api->displayResponse();
 	}
 }

@@ -61,23 +61,33 @@ class APIResponse
 	}
 
 	const ERROR_NOT_FOUND = 404;
+	const ERROR_INVALID_REQUEST_METHOD = 501;
 
 	/**
-	 * @param int $error_code
+	 * @param $error_code
+	 * @param string|null $error_message
 	 */
-	public function displayFailure($error_code)
+	public function displayFailure($error_code, $error_message = null)
 	{
 		$this->setStatus('fail');
-		$error_message = 'Unknown error code provided.';
-		switch ($error_code)
+		if (is_null($error_message))
 		{
-			case self::ERROR_NOT_FOUND:
-				$error_message = 'Provided URL is not supported, please check documentation.';
-				break;
+			$error_message = 'Unknown error code provided.';
+			switch ($error_code)
+			{
+				case self::ERROR_NOT_FOUND:
+					$error_message = 'Provided URL is not supported, please check documentation.';
+					break;
+				case self::ERROR_INVALID_REQUEST_METHOD:
+					$error_message = 'Invalid request method provided, please check documentation.';
+					break;
+			}
 		}
 		$this->setResult(array(
-			'errorCode' => $error_code,
-			'errorMessage' => $error_message
+			'error' => array(
+				'code' => $error_code,
+				'message' => $error_message
+			)
 		));
 		$this->displayResult();
 	}

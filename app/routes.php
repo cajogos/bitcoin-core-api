@@ -1,17 +1,11 @@
 <?php
 /*
- * Routing of your application's pages
- *
  * - Routing is done using AltoRouter (http://altorouter.com/usage/mapping-routes.html)
  */
 $router = new AltoRouter();
-
-
-$router->map('GET', '/', 'APIController::handleIndex');
-$router->map('GET', '/[a:api_method]', 'APIController::handleMethod', 'api_get');
+$router->map('GET|POST', '/[a:api_method]', 'APIController::handleRequest');
 
 /**
- * Function that handles the AltoRouter object - must be present in order for your routes to work
  * @param AltoRouter $router
  */
 function handleRouting(AltoRouter $router)
@@ -24,8 +18,8 @@ function handleRouting(AltoRouter $router)
 	else
 	{
 		header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
-		$tpl = Cajogos\Biscuit\Template::create('pages/404.tpl');
-		$tpl->display();
+		$api_response = new APIResponse();
+		$api_response->displayFailure(APIResponse::ERROR_NOT_FOUND);
 	}
 }
 handleRouting($router);
