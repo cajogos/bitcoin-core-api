@@ -129,15 +129,19 @@ class CoreAPIRequest
 			}
 		}
 		$response = $this->do_request(self::METHOD_GET_GETBALANCE, $params);
-
 		$output = array(
 			'account' => $account,
 			'balance' => $response['result']
 		);
-
 		$this->api_response->setResult($output);
 	}
 
+	/**
+	 * @param string $method
+	 * @param array $params
+	 * @return array
+	 * @throws CoreAPIRequestException
+	 */
 	private function do_request($method, $params = array())
 	{
 		$ch = curl_init();
@@ -166,11 +170,7 @@ class CoreAPIRequest
 
 			if ($http_code !== 200)
 			{
-				$result = array(
-					'message' => 'Curl error',
-					'details' => $curl_error
-				);
-				return $result;
+				throw new CoreAPIRequestException('Curl error: ' . $curl_error, CoreAPIRequestException::CURL_ERROR);
 			}
 		}
 

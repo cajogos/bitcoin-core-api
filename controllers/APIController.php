@@ -51,22 +51,28 @@ class APIController extends Controller
 	private static function handle_get($method)
 	{
 		$params = $_GET;
-
-		$core_api = new CoreAPIRequest(self::$api_response);
-		$core_api->addParams($params);
-		switch ($method)
+		try
 		{
-			case CoreAPIRequest::METHOD_GET_GETINFO:
-				$core_api->getInfo();
-				break;
-			case CoreAPIRequest::METHOD_GET_GETBALANCE:
-				$core_api->getBalance();
-				break;
-			default:
-				self::$api_response->displayFailure(CoreAPIRequest::ERROR_INVALID_METHOD, "Invalid method GET $method provided, please check documentation.");
-				break;
+			$core_api = new CoreAPIRequest(self::$api_response);
+			$core_api->addParams($params);
+			switch ($method)
+			{
+				case CoreAPIRequest::METHOD_GET_GETINFO:
+					$core_api->getInfo();
+					break;
+				case CoreAPIRequest::METHOD_GET_GETBALANCE:
+					$core_api->getBalance();
+					break;
+				default:
+					self::$api_response->displayFailure(CoreAPIRequest::ERROR_INVALID_METHOD, "Invalid method GET $method provided, please check documentation.");
+					break;
+			}
+			$core_api->displayResponse();
 		}
-		$core_api->displayResponse();
+		catch (CoreAPIRequestException $e)
+		{
+			self::$api_response->displayFailure(CoreAPIRequest::ERROR_EXCEPTION_THROWN, $e->getMessage());
+		}
 	}
 
 	/**
@@ -75,15 +81,21 @@ class APIController extends Controller
 	private static function handle_post($method)
 	{
 		$params = $_POST;
-
-		$core_api = new CoreAPIRequest(self::$api_response);
-		$core_api->addParams($params);
-		switch ($method)
+		try
 		{
-			default:
-				self::$api_response->displayFailure(CoreAPIRequest::ERROR_INVALID_METHOD, "Invalid method POST $method provided, please check documentation.");
-				break;
+			$core_api = new CoreAPIRequest(self::$api_response);
+			$core_api->addParams($params);
+			switch ($method)
+			{
+				default:
+					self::$api_response->displayFailure(CoreAPIRequest::ERROR_INVALID_METHOD, "Invalid method POST $method provided, please check documentation.");
+					break;
+			}
+			$core_api->displayResponse();
 		}
-		$core_api->displayResponse();
+		catch (CoreAPIRequestException $e)
+		{
+			self::$api_response->displayFailure(CoreAPIRequest::ERROR_EXCEPTION_THROWN, $e->getMessage());
+		}
 	}
 }
