@@ -1,4 +1,4 @@
-# :star: :star: :star: PHP Bitcoin Core JSON RPC API wrapper :star: :star: :star:
+# :star: PHP Bitcoin Core JSON RPC API wrapper :star:
 
 https://bitcoin.org/en/developer-reference#remote-procedure-calls-rpcs
 
