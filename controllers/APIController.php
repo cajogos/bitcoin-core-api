@@ -10,7 +10,7 @@ class APIController extends Controller
 			'getinfo',
 			'getblockchaininfo',
 			'getbalance'
-			);
+		);
 
 		print '<h1>Available Methods:</h1>';
 		foreach ($methods as $method)
@@ -27,11 +27,14 @@ class APIController extends Controller
 		{
 			case 'getinfo':
 			case 'getblockchaininfo':
-				BitcoinCore::getBlockChainInfo();
-				break;
+				$api = BitcoinAPI::get();
+				$api->setMethod('getblockchaininfo');
+				return $api->getResult();
 			case 'getbalance';
-				BitcoinCore::getBalance();
-				break;
+				$api = BitcoinAPI::get();
+				$api->setMethod('getbalance');
+//				$api->addParam($account);
+				return $api->getResult();
 			default:
 				break;
 		}

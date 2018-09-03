@@ -6,10 +6,17 @@ class BitcoinAPI extends APIResponse
 {
 	private static $instance = null;
 
+	private $api_call = null;
+
 	private $method = null;
 	private $params = array();
 
-	private function __construct() {}
+	private function __construct()
+	{
+		$this->api_call = 'http://';
+		$this->api_call .= Site::getConfiguration('rpc_username') . ':' . Site::getConfiguration('rpc_password') . '@';
+		$this->api_call .= Site::getConfiguration('rpc_host') . ':' . Site::getConfiguration('rpc_port') . '/';
+	}
 
 	public static function get()
 	{
@@ -47,7 +54,6 @@ class BitcoinAPI extends APIResponse
 
 	private function curl()
 	{
-		$url = 'http://' . RPC_USER . ':' . RPC_PASSWORD . '@' . RPC_HOST . ':' . RPC_PORT . '/';
 
 		$ch = curl_init();
 
@@ -61,7 +67,7 @@ class BitcoinAPI extends APIResponse
 
 		$json_post = json_encode($post_fields);
 
-		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_URL, $this->api_call);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $json_post);
