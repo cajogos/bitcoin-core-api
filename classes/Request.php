@@ -125,4 +125,15 @@ class Request
 		header('Location: ' . $location);
 		exit;
 	}
+
+	const METHOD_GET = 'GET';
+	const METHOD_POST = 'POST';
+
+	/**
+	 * @return string|null
+	 */
+	public static function getMethod()
+	{
+		return isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : null;
+	}
 }
