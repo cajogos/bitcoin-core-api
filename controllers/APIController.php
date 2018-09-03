@@ -2,6 +2,9 @@
 
 use Cajogos\Biscuit\Controller as Controller;
 
+/**
+ * Class APIController
+ */
 class APIController extends Controller
 {
 	/**
@@ -9,23 +12,32 @@ class APIController extends Controller
 	 */
 	private static $api_response = null;
 
+	/**
+	 * @param string $method
+	 */
 	public static function handleRequest($method)
 	{
-		$method = self::cleanup_method($method);
-
 		self::$api_response = new APIResponse();
-		switch (Request::getMethod())
+		$method = self::cleanup_method($method);
+		if (!empty($method))
 		{
-			case Request::METHOD_GET:
-				self::handle_get($method);
-				break;
-			case Request::METHOD_POST:
-				self::handle_post($method);
-				break;
+			switch (Request::getMethod())
+			{
+				case Request::METHOD_GET:
+					self::handle_get($method);
+					break;
+				case Request::METHOD_POST:
+					self::handle_post($method);
+					break;
+			}
 		}
 		self::$api_response->displayFailure(APIResponse::ERROR_INVALID_REQUEST_METHOD);
 	}
 
+	/**
+	 * @param string $method
+	 * @return string
+	 */
 	private static function cleanup_method($method)
 	{
 		$method = trim($method);
@@ -33,6 +45,9 @@ class APIController extends Controller
 		return $method;
 	}
 
+	/**
+	 * @param string $method
+	 */
 	private static function handle_get($method)
 	{
 		$params = $_GET;
@@ -54,6 +69,9 @@ class APIController extends Controller
 		$core_api->displayResponse();
 	}
 
+	/**
+	 * @param string $method
+	 */
 	private static function handle_post($method)
 	{
 		$params = $_POST;
