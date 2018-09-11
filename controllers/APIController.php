@@ -63,6 +63,9 @@ class APIController extends Controller
 				case CoreAPIRequest::METHOD_GET_GETBALANCE:
 					$core_api->getBalance();
 					break;
+				case CoreAPIRequest::METHOD_GET_GETWALLETINFO:
+					$core_api->getWalletInfo();
+					break;
 				default:
 					self::$api_response->displayFailure(CoreAPIRequest::ERROR_INVALID_METHOD, "Invalid method GET $method provided, please check documentation.");
 					break;

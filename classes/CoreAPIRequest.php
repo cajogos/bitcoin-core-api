@@ -93,6 +93,7 @@ class CoreAPIRequest
 
 	const METHOD_GET_GETINFO = 'getinfo';
 	const METHOD_GET_GETBALANCE = 'getbalance';
+	const METHOD_GET_GETWALLETINFO = 'getwalletinfo';
 
 	/**
 	 * GET: getinfo
@@ -105,7 +106,7 @@ class CoreAPIRequest
 	}
 
 	/**
-	 * GET: getBalance
+	 * GET: getbalance
 	 * Params:
 	 * - "account" [string] (Optional) An account name, use * to display ALL, empty string to display default account.
 	 * --- "confirmations" [int] The minimum number of confirmations.
@@ -133,6 +134,16 @@ class CoreAPIRequest
 			'account' => $account,
 			'balance' => $response['result']
 		);
+		$this->api_response->setResult($output);
+	}
+
+	/**
+	 * GET: getwalletinfo
+	 */
+	public function getWalletInfo()
+	{
+		$response = $this->do_request(self::METHOD_GET_GETWALLETINFO);
+		$output = $response['result'];
 		$this->api_response->setResult($output);
 	}
 
