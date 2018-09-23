@@ -16,6 +16,11 @@
 - **URI:** `/getwalletinfo`
 - **Example:** `http://localhost/getwalletinfo`
 
+---
+### :ok_hand: getpeerinfo
+
+- **URI:** `/getpeerinfo`
+- **Example:** `http://localhost/getpeerinfo`
 
 ---
 ### :ok_hand: getbalance

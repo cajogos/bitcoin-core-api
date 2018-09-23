@@ -94,8 +94,11 @@ class CoreAPIRequest
 	const METHOD_GET_GETINFO = 'getinfo';
 	const METHOD_GET_GETBALANCE = 'getbalance';
 	const METHOD_GET_GETWALLETINFO = 'getwalletinfo';
+	const METHOD_GET_GETPEERINFO = 'getpeerinfo';
 
 	/**
+	 * @throws CoreAPIRequestException
+	 *
 	 * GET: getinfo
 	 */
 	public function getInfo()
@@ -106,6 +109,8 @@ class CoreAPIRequest
 	}
 
 	/**
+	 * @throws CoreAPIRequestException
+	 *
 	 * GET: getbalance
 	 * Params:
 	 * - "account" [string] (Optional) An account name, use * to display ALL, empty string to display default account.
@@ -138,11 +143,25 @@ class CoreAPIRequest
 	}
 
 	/**
+	 * @throws CoreAPIRequestException
+	 *
 	 * GET: getwalletinfo
 	 */
 	public function getWalletInfo()
 	{
 		$response = $this->do_request(self::METHOD_GET_GETWALLETINFO);
+		$output = $response['result'];
+		$this->api_response->setResult($output);
+	}
+
+	/**
+	 * @throws CoreAPIRequestException
+	 *
+	 * GET: getpeerinfo
+	 */
+	public function getPeerInfo()
+	{
+		$response = $this->do_request(self::METHOD_GET_GETPEERINFO);
 		$output = $response['result'];
 		$this->api_response->setResult($output);
 	}
