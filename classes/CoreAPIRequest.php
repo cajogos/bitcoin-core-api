@@ -109,8 +109,8 @@ class CoreAPIRequest
 	 * GET: getbalance
 	 * Params:
 	 * - "account" [string] (Optional) An account name, use * to display ALL, empty string to display default account.
-	 * --- "confirmations" [int] The minimum number of confirmations.
-	 * --- "watchOnly" [bool] Whether to include watch-only addresses.
+	 * - "confirmations" [int] The minimum number of confirmations.
+	 * - "watchOnly" [bool] Whether to include watch-only addresses.
 	 */
 	public function getBalance()
 	{

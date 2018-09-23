@@ -10,9 +10,12 @@
 - **URI:** `/getinfo`
 - **Example:** `http://localhost/getinfo`
 
-**Params**
+---
+### :ok_hand: getwalletinfo
 
-None.
+- **URI:** `/getwalletinfo`
+- **Example:** `http://localhost/getwalletinfo`
+
 
 ---
 ### :ok_hand: getbalance
