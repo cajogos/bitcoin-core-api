@@ -50,7 +50,11 @@ class CoreAPIRequest
 	 * @var array Array of valid params - to be improved as needed
 	 */
 	private static $valid_params = array(
-		'account', 'confirmations', 'watchOnly'
+		'account',
+		'confirmations',
+		'watchOnly',
+		'count',
+		'skip'
 	);
 
 	/**
@@ -85,21 +89,25 @@ class CoreAPIRequest
 			{
 				$value = (bool)$value;
 			}
+			else if (is_numeric($value))
+			{
+				$value = (float)$value;
+			}
 			$this->params[$key] = $value;
 			return true;
 		}
 		return false;
 	}
 
+	/**
+	 * Call: getinfo
+	 * Method: GET
+	 * Params: N/A
+	 */
 	const METHOD_GET_GETINFO = 'getinfo';
-	const METHOD_GET_GETBALANCE = 'getbalance';
-	const METHOD_GET_GETWALLETINFO = 'getwalletinfo';
-	const METHOD_GET_GETPEERINFO = 'getpeerinfo';
 
 	/**
 	 * @throws CoreAPIRequestException
-	 *
-	 * GET: getinfo
 	 */
 	public function getInfo()
 	{
@@ -109,13 +117,17 @@ class CoreAPIRequest
 	}
 
 	/**
-	 * @throws CoreAPIRequestException
-	 *
-	 * GET: getbalance
+	 * Call: getbalance
+	 * Method: GET
 	 * Params:
 	 * - "account" [string] (Optional) An account name, use * to display ALL, empty string to display default account.
-	 * - "confirmations" [int] The minimum number of confirmations.
-	 * - "watchOnly" [bool] Whether to include watch-only addresses.
+	 * - "confirmations" [int] (Optional) The minimum number of confirmations.
+	 * - "watchOnly" [bool] (Optional) Whether to include watch-only addresses.
+	 */
+	const METHOD_GET_GETBALANCE = 'getbalance';
+
+	/**
+	 * @throws CoreAPIRequestException
 	 */
 	public function getBalance()
 	{
@@ -127,7 +139,7 @@ class CoreAPIRequest
 			$account = $this->params['account'];
 			if (isset($this->params['confirmations']))
 			{
-				$params[] = (int) $this->params['confirmations'];
+				$params[] = (int)$this->params['confirmations'];
 				if (isset($this->params['watchOnly']))
 				{
 					$params[] = $this->params['watchOnly'];
@@ -143,9 +155,14 @@ class CoreAPIRequest
 	}
 
 	/**
+	 * Call: getwalletinfo
+	 * Method: GET
+	 * Params: N/A
+	 */
+	const METHOD_GET_GETWALLETINFO = 'getwalletinfo';
+
+	/**
 	 * @throws CoreAPIRequestException
-	 *
-	 * GET: getwalletinfo
 	 */
 	public function getWalletInfo()
 	{
@@ -155,14 +172,76 @@ class CoreAPIRequest
 	}
 
 	/**
+	 * Call: getpeerinfo
+	 * Method: GET
+	 * Params: N/A
+	 */
+	const METHOD_GET_GETPEERINFO = 'getpeerinfo';
+
+	/**
 	 * @throws CoreAPIRequestException
-	 *
-	 * GET: getpeerinfo
 	 */
 	public function getPeerInfo()
 	{
 		$response = $this->do_request(self::METHOD_GET_GETPEERINFO);
 		$output = $response['result'];
+		$this->api_response->setResult($output);
+	}
+
+	/**
+	 * Call: listtransactions
+	 * Method: GET
+	 * Params:
+	 * - "account" [string] (Optional) The name of an account to get transactions from. Use an empty string (“”) to get transactions for the default account. (Default  *)
+	 * - "count" [int] (Optional) The number of the most recent transactions to list. (Default 10)
+	 * - "skip" [int] (Optional) The number of the most recent transactions which should not be returned. Allows for pagination of results. (Default 0)
+	 * - "watchOnly" [bool] (Optional) Whether to include watch-only addresses. (Default false)
+	 */
+	const METHOD_GET_LISTRANSACTIONS = 'listtransactions';
+
+	/**
+	 * @throws CoreAPIRequestException
+	 */
+	public function listTransactions()
+	{
+		$params = array();
+
+		$account = '*';
+		if (isset($this->params['account']))
+		{
+			$account = $this->params['account'];
+		}
+		$params[] = $account;
+
+		$count = 10;
+		if (isset($this->params['count']))
+		{
+			$count = $this->params['count'];
+		}
+		$params[] = $count;
+
+		$skip = 0;
+		if (isset($this->params['skip']))
+		{
+			$skip = $this->params['skip'];
+		}
+		$params[] = $skip;
+
+		$watch_only = false;
+		if (isset($this->params['watchOnly']))
+		{
+			$watch_only = $this->params['watchOnly'];
+		}
+		$params[] = $watch_only;
+
+		$response = $this->do_request(self::METHOD_GET_LISTRANSACTIONS, $params);
+
+		$output = array(
+			'account' => $account,
+			'watchOnly' => $watch_only,
+			'transactions' => $response['result']
+		);
+
 		$this->api_response->setResult($output);
 	}
 

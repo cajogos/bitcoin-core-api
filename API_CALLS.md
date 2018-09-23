@@ -37,6 +37,21 @@ Name | Type | Presence | Description
 `watchOnly` | bool | optional | Whether to include watch-only addresses.
 
 ---
+### :ok_hand: listtransactions
+
+- **URI:** `/listtransactions`
+- **Example:** `http://localhost/listtransactions?account=carlos&count=20&skip=10&watchOnly=true`
+
+**Params**
+
+Name | Type | Presence | Description
+--- | --- | --- | ---
+`account` | string | optional | The name of an account to get transactions from. Use an empty string (“”) to get transactions for the default account. (Default  * for ALL)
+`count` | int | optional | The number of the most recent transactions to list. (Default 10)
+`skip` | int | optional | The number of the most recent transactions which should not be returned. Allows for pagination of results. (Default 0)
+`watchOnly` | bool | optional | Whether to include watch-only addresses. (Default false)
+
+---
 More coming as needed...
 
 ---

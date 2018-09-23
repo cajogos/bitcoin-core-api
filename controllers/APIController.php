@@ -69,6 +69,9 @@ class APIController extends Controller
 				case CoreAPIRequest::METHOD_GET_GETPEERINFO:
 					$core_api->getPeerInfo();
 					break;
+				case CoreAPIRequest::METHOD_GET_LISTRANSACTIONS:
+					$core_api->listTransactions();
+					break;
 				default:
 					self::$api_response->displayFailure(CoreAPIRequest::ERROR_INVALID_METHOD, "Invalid method GET $method provided, please check documentation.");
 					break;
